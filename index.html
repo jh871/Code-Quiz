@@ -16,7 +16,7 @@
     <div class="timer">Time: <span id="time">0</span></div><!---->
 
     <div class="wrapper">
-      <div id="start-screen" class="hide"><!--onstart can change class to hide-->
+      <div id="start-screen" class="start show"><!--onstart can change class to hide-->
         <h1>Coding Quiz Challenge</h1>
         <p>
           Try to answer the following code-related questions within the time
@@ -26,7 +26,7 @@
         <button id="start">Start Quiz</button><!--needs event listener-->
       </div>
 
-      <div id="questions" class=""><!--onstart change class to show-->
+      <div id="questions" class="hide"><!--onstart change class to show-->
         <h2 id="question-title"></h2><!--Add text: question-->
         <div id="choices" class="choices"></div><!--change this text per question-->
         <!--need 4 divs, one per question-->
@@ -42,7 +42,7 @@
       </div>
 
       <div id="feedback" class="feedback hide"><!--change class to show-->
-        <!--add text giving question feedback-->
+
       </div>
     </div>
 
