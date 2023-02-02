@@ -1,4 +1,4 @@
-const questions =  [
+const questionsArr =  [
     {
         questionNumber: 1,
         question: "Question one?",
