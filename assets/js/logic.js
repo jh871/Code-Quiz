@@ -10,11 +10,11 @@ questionsArr.forEach(function(question, index, arr){
 
 
 //selects random question
+function randomQ() {
 let random = Math.floor(Math.random() * questionsArr.length);
 console.log(questionsArr[random].questionNumber)
 console.log(questionsArr[random].question);
-//
-
+}
 
 // grabbing elements that will need manipulating
 //startscreen
@@ -30,27 +30,85 @@ let feedbackDiv = document.querySelector("#feedback");
 //screen to show at the end of the quiz
 let endscreenDiv = document.querySelector("#end-screen");
 
-const numberofOptions = [1, 2, 3, 4]
 
-//need 4 choices divs
-// let choiceBtn1 = document.createElement("button");
-// let choiceBtn2 = document.createElement("button");
-// let choiceBtn3 = document.createElement("button");
-// let choiceBtn4 = document.createElement("button");
 
-// choiceBtn1.textContent = "Option 1"
-// choicesDiv.appendChild(choiceBtn1);
 
+//init 
+// let questionCount = 0;
+
+// //function for if selected answer is wrong
+// function wrongAnswer(){
+// feedbackDiv.textContent = "Wrong!"
+// secondsLeft = secondsLeft - 10;
+// questionCount++;
+// //generate next question
+// };
+
+// //loop for end of game
+// if (questionCount = 5){
+//     questionsDiv.className.replace("show", "hide");
+//     endscreenDiv.className.replace("hide","show");
+
+//     let score = secondsRemaining;
+// };
+
+// start quiz
+// function startQuiz() {
+//     startscreenDiv.className.replace("show", "hide");
+//     questionsDiv.className.replace("hide", "show");
+//     }
+
+
+//questions array = [random(), random(), random(), random()]
+// question number = questions.index[i + 1]
+
+
+// pulling question title from questionsArr
 for (let i = 0; i < questionsArr.length; i++){
     questionTitle.textContent = (questionsArr[i].question);
-    console.log(questionsArr[i]);
-}
-
-
-for (let i = 0; i< numberofOptions.length; i++) {
+};
+// x = 5, i = 4
+//generating 4 options
+// const numberofOptions = [1, 2, 3, 4]
+questionsArr.forEach(function(arr) {
+    
+for (let i = 0; i< arr.options.length; i++) {
     let buttonEl = document.createElement("button");
-    buttonEl.id = ("button"+numberofOptions[i]);
-    buttonEl.textContent = ("button"+numberofOptions[i]);
+    buttonEl.id = ("button"+[i]);
+    buttonEl.className = ("button");
+
+// adding labels to buttons from options
+
+    buttonEl.textContent = arr.options[i];
+
+
     choicesDiv.appendChild(buttonEl);
-}
+
+    buttonEl.addEventListener("click", function(event) {
+    if (event.target.textContent === arr.correctAnswer){
+        feedbackDiv.textContent = "Correct!";
+    } else {
+        feedbackDiv.textContent = "Wrong!"
+    
+    
+    }});
+}});
+
+
+// //function for if answer is correct
+// function correctAnswer() {
+//     feedbackDiv.textContent = "Correct!"
+//     questionCount++;
+//     //generate next question
+// };
+
+
+//start button
+let startBtn = document.querySelector("#start");
+
+startBtn.addEventListener("click", function(event){
+    event.preventDefault();
+    startscreenDiv.classList.replace("show", "hide");
+    questionsDiv.classList.replace("hide", "show");
+});
 
