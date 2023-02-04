@@ -1,184 +1,82 @@
-
-// grabbing elements that will need manipulating
-//startscreen
-let startscreenDiv = document.querySelector("#start-screen");
-//div containing question and choices
-let questionsDiv = document.querySelector("#questions");
-//div containing question
-let questionTitle = document.querySelector("#question-title");
-//div containing answer choices
-let choicesDiv = document.querySelector("#choices");
-// div to contain "right" or "wrong after each question"
-let feedbackDiv = document.querySelector("#feedback");
-//screen to show at the end of the quiz
-let endscreenDiv = document.querySelector("#end-screen");
-
-
-//init 
-let questionCount = 0;
-
-// //function for if selected answer is wrong
-// function wrongAnswer(){
-// feedbackDiv.textContent = "Wrong!"
-// secondsLeft = secondsLeft - 10;
-// questionCount++;
-// //generate next question
-// };
-
-// //loop for end of game
-// if (questionCount = 5){
-//     questionsDiv.className.replace("show", "hide");
-//     endscreenDiv.className.replace("hide","show");
-
-//     let score = secondsRemaining;
-// };
-
-// start quiz
-// function startQuiz() {
-//     startscreenDiv.className.replace("show", "hide");
-//     questionsDiv.className.replace("hide", "show");
-//     }
-
-
-//questions array = [random(), random(), random(), random()]
-// question number = questions.index[i + 1]
-
-
-//questionsindex === questions.length
-// let qNums = [];
-
-// for (let i = 0; i < qsArr.length; i++){
-// qNums[i] = qsArr[i].questionNumber;
-// }
-// console.log("Q nums: "+ qNums);
-
-
-//map questionNumber to an array,
-//loop through qNum array?
-
-// let nextBtn = document.createElement("button");
-//     nextBtn.textContent = ("Next");
-//     feedbackDiv.appendChild(nextBtn);
-
-//loop to label choices
-let nextQ = qsArr.forEach(function(arr) {
-    choicesDiv.innerHTML="";
-    questionCount++
-    console.log(questionCount);
-
-    questionTitle.textContent = arr.question;
-
-    let choiceSet = document.createElement("div");
-    choiceSet.classList.add("choices-set");
-    choicesDiv.appendChild(choiceSet)
-    choiceSet.setAttribute("id", "set"+arr.questionNumber)
-
-    for (let i = 0; i< arr.options.length; i++) {
-        let buttonEl = document.createElement("button");
-        buttonEl.id = ("button"+[i]);
-        buttonEl.className = ("button");
-
-    // adding labels to buttons from options
-        buttonEl.textContent = arr.options[i];
-        choiceSet.appendChild(buttonEl);
-        buttonEl.addEventListener("click", function(event) {
-        if (event.target.textContent === arr.correctAnswer){
-            feedbackDiv.textContent = "Correct!";
-        } else if (event.target.textContent !== arr.correctAnswer) {
-            feedbackDiv.textContent = "Wrong!"
-        };
-        //and then generate next btn
-        //run nxtQ function
-    
-        if (questionCount <= qsArr.length){
-            nextBtn.addEventListener("click", function(event) {
-            event.preventDefault
-            nextQ();  
-            })} else if (questionCount === qsArr.length){
-                endOfQuiz();
-            }
-        
-    
-    });//eventlistener on choice button
-}//for loop through options
-});//qsArr foreach
-
-
-
-//start button
+const startscreenDiv = document.querySelector("#start-screen");
 let startBtn = document.querySelector("#start");
+
+const questionsDiv = document.querySelector("#questions");
+let questionTitle = document.querySelector("#question-title");
+let choicesDiv = document.querySelector("#choices");
+
+const feedbackDiv = document.querySelector("#feedback");
+const endscreenDiv = document.querySelector("#end-screen");
+
+
+let qCount = 0; //will get up to 4 (5 counts)
+let qChoices = qsArr[qCount].options; //new array of 4 items
+choicesDiv.innerHTML=""; //sets blank page - will use later
+
+
 
 startBtn.addEventListener("click", function(event){
     event.preventDefault();
-    startscreenDiv.classList.replace("show", "hide");
+    startscreenDiv.classList.replace("start", "hide");
     questionsDiv.classList.replace("hide", "show");
     feedbackDiv.classList.replace("hide", "show");
+    askQuestion();
+    makeButtons();
 });
 
-
-
-// //function for if answer is correct
-// function correctAnswer() {
-//     feedbackDiv.textContent = "Correct!"
-//     questionCount++;
-//     //generate next question
-// };
-
-
-// check if correct function
-function checkAnswer(event) {
-    
-    if (event.target.textContent === arr.correctAnswer){
-        feedbackDiv.textContent = "Correct!";
-    } else {
-        feedbackDiv.textContent = "Wrong!"
-    }
+function askQuestion() {
+    questionTitle.textContent = qsArr[qCount].question;
 }
-//call
-// choiceBtn.addEventListener("click", checkAnswer());
+
+
+function makeButtons() {
+//generates 4 buttons
+for (let i=0; i < qChoices.length; i++) {
+    let optionsBtn = document.createElement("button");
+    optionsBtn.id = ("button"+(qCount+1));
+    optionsBtn.className = ("optionsBtn");
+    optionsBtn.textContent = qChoices[i]; //wobt change text when next button is clicked
+    choicesDiv.appendChild(optionsBtn);
+    optionsBtn.addEventListener("click", answerGiven) 
+    };
+}
+
+
+//function for receiving answer
+function answerGiven(event) {
+    console.log(event.target);
+    console.log(qsArr[qCount].correctAnswer);
+    if (event.target.textContent === qsArr[qCount].correctAnswer){
+        feedbackDiv.textContent = "Correct!";
+    } else if (event.target.textContent !== qsArr[qCount].correctAnswer) {
+        feedbackDiv.textContent = "Wrong!"
+        // secondsLeft = secondsLeft - 10;
+    };
+    let nextBtn = document.createElement("button");
+    feedbackDiv.appendChild(nextBtn);
+        if (qCount < qsArr.length){
+            nextBtn.innerText = "Next";
+            nextBtn.addEventListener("click", nextQ);
+        } else if (qCount === qsArr.length) {
+            nextBtn.innerText = "Done";
+            //endGame;
+        }
+    }
+
+function nextQ() {
+    qCount++;
+    askQuestion();
+    makeButtons();
+}
 
 
 
 
-
-
-
-
-//Other stuff
-//init 
-// let questionCount = 0;
-
-// //function for if selected answer is wrong
-// function wrongAnswer(){
-// feedbackDiv.textContent = "Wrong!"
-// secondsLeft = secondsLeft - 10;
-// questionCount++;
-// //generate next question
-// };
-
-
-// //function for if answer is correct
-// function correctAnswer() {
-//     feedbackDiv.textContent = "Correct!"
-//     questionCount++;
-//     //generate next question
-// };
-
-
-// //loop for end of game
-// if (questionCount = 5){
+// //loop for endGame - build function which is called
 //     questionsDiv.className.replace("show", "hide");
 //     endscreenDiv.className.replace("hide","show");
-
 //     let score = secondsRemaining;
 // };
 
-// start quiz
-// function startQuiz() {
-//     startscreenDiv.className.replace("show", "hide");
-//     questionsDiv.className.replace("hide", "show");
-//     }
 
 
-//questions array = [random(), random(), random(), random()]
-// question number = questions.index[i + 1]
