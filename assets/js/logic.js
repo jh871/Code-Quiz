@@ -9,6 +9,25 @@ const feedbackDiv = document.querySelector("#feedback");
 const endscreenDiv = document.querySelector("#end-screen");
 
 
+
+ //no because this only creates one button
+
+// let optBtnClicked = null;
+// let nxtBtnClicked = null;
+
+
+// function disableButtons() {
+//     if (optBtnClicked === false){
+//         nextBtn.disabled = true;
+//         optionsBtn.disabled = false;
+//     } else if (optBtnClicked === true){
+//         optionsBtn.disabled = true;
+//         nextBtn.disabled = false;
+//     }; 
+// };
+
+
+
 let qCount = 0; //will get up to 4 (5 counts)
 let qChoices = qsArr[qCount].options; //new array of 4 items
 choicesDiv.innerHTML=""; //sets blank page - will use later
@@ -16,7 +35,7 @@ choicesDiv.innerHTML=""; //sets blank page - will use later
 
 
 startBtn.addEventListener("click", function(event){
-    event.preventDefault();
+    event.preventDefault(); //what does this do here?
     startscreenDiv.classList.replace("start", "hide");
     questionsDiv.classList.replace("hide", "show");
     feedbackDiv.classList.replace("hide", "show");
@@ -28,33 +47,27 @@ function askQuestion() {
     questionTitle.textContent = qsArr[qCount].question;
 }
 
-
 function makeButtons() {
     choicesDiv.innerHTML = "";
 //generates 4 buttons
-for (let i=0; i < qChoices.length; i++) {
+    for (let i=0; i < qChoices.length; i++) {
+        let optionsBtn = document.createElement("button");
+        optionsBtn.id = ("button"+(i+1));
+        optionsBtn.className = ("optionsBtn");
+        optionsBtn.textContent = qChoices[i]; 
+        choicesDiv.appendChild(optionsBtn);
+        optionsBtn.addEventListener("click", answerGiven);
+        };
 
-    let optionsBtn = document.createElement("button");
-
-    optionsBtn.id = ("button"+(qCount+1));
-
-    optionsBtn.className = ("optionsBtn");
-
-    optionsBtn.textContent = qChoices[i]; 
-    //wont change text when new buttons are generated
-    choicesDiv.appendChild(optionsBtn);
-
-    optionsBtn.addEventListener("click", answerGiven) 
-    };
 }
-
 
 
 //function for receiving answer
 function answerGiven(event) {
-    console.log(event.target);
-    console.log(qCount);
-    console.log(qsArr[qCount].correctAnswer);
+    let answerChoice = event.target;
+    answerChoice.classList.add("answer");
+    // console.log(qCount);
+    // console.log(qsArr[qCount].correctAnswer);
     if (event.target.textContent === qsArr[qCount].correctAnswer){
         feedbackDiv.textContent = "Correct!";
     } else if (event.target.textContent !== qsArr[qCount].correctAnswer) {
@@ -62,8 +75,8 @@ function answerGiven(event) {
         // secondsLeft = secondsLeft - 10;
     };
     showNextButton();
-    }
-
+    
+}
     // function for showing Next button (called when receiving answer)
 function showNextButton() {
     let nextBtn = document.createElement("button");
@@ -72,17 +85,18 @@ function showNextButton() {
         if ((qCount+1) < qsArr.length){
             nextBtn.innerText = "Next";
             nextBtn.addEventListener("click", nextQ);
-            console.log(qCount+1);
         } else if ((qCount+1) === qsArr.length) {
             nextBtn.innerText = "Done";
             console.log("last q:" + (qCount+1));
-            //endGame;
+            nextBtn.addEventListener("click", endGame);
         }
 }
 
-
-
-function nextQ() {
+function nextQ(event) {
+    let nextBtn = event.target;
+    console.log(event.target);
+    nextBtn.classList.add("hide");
+    
     if (qCount < qsArr.length){
     qCount++;
     }
@@ -95,11 +109,44 @@ function nextQ() {
 
 
 
+// let buttons = document.querySelectorAll(".optionsBtn");
+//     console.log(buttons[0]);
+    
+//     // answer.removeEventListener("click", answerGiven);
+//     console.log(answers);
+
+
+
+
+
+
+
+
+
+
+
+
+ //as soon as opt buttons made
+ //when next button made
+//when answer clicked
+ //when next clicked
+// optionsBtn.disabled = true;
+// optionsBtn.disabled = false;
+// nextBtn.disabled = true;
+// nextBtn.disabled = false;
+
+
+
+
+
+function endGame() {
+    alert("Game over!")
+};
 // //loop for endGame - build function which is called
 //     questionsDiv.className.replace("show", "hide");
 //     endscreenDiv.className.replace("hide","show");
 //     let score = secondsRemaining;
 // };
 
-
+//make endGame an alert for now
 
