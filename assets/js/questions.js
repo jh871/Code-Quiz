@@ -57,13 +57,6 @@ const qsArr =  [
 ];
 
 
-//to extract just options
-// for (i=0; i<questionsArr.length; i++){
-//     console.log(questionsArr[i].questionNumber);
-    
-// };
-
-//change every answer to the correct answer to check that correct answer function works
 
 /*
 // Spare code:
@@ -72,15 +65,4 @@ function randomQ() {
     let random = Math.floor(Math.random() * questionsArr.length);
     console.log(questionsArr[random].questionNumber)
     console.log(questionsArr[random].question);
-    }
-
-// OBSELETE test logic to loop through and display text for questions
-questionsArr.forEach(function(question, index, arr){
-    console.log(arr[index].questionNumber + ") " + arr[index].question);
-    console.log(arr[index].correctAnswer);
-    console.log(arr[index].options);
-    console.log(arr[index].options);
-    // console.log(arr[index].option3);
-    // console.log(arr[index].option4);
-})
-*/
+}*/

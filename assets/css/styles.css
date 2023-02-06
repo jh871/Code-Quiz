@@ -130,6 +130,7 @@ ol {
 li {
   padding: 5px;
   list-style: decimal inside none;
+  color: black;
 }
 
 li:nth-child(odd) {
