@@ -56,7 +56,8 @@ h2 {
 
 /* Choices div */
 #choices {
-  display: flex;
+  display: block;
+
   justify-content: space-around;
   padding: 10px;
   border-left: 4px solid black;
