@@ -64,8 +64,9 @@ function makeButtons() {
 
 //function for receiving answer
 function answerGiven(event) {
+    // event.target.style.border = "4px solid black";
     let answerChoice = event.target;
-    answerChoice.classList.add("answer");
+    answerChoice.classList.add("answerChoice");
     // console.log(qCount);
     // console.log(qsArr[qCount].correctAnswer);
     if (event.target.textContent === qsArr[qCount].correctAnswer){
