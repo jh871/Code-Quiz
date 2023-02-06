@@ -9,7 +9,6 @@ const feedbackDiv = document.querySelector("#feedback");
 Timer
 *******************/
 let secondsLeft = 60;
-let score = 0;
 let timerDiv = document.querySelector(".timer");
 let timeText = document.querySelector("#time");
 
@@ -23,6 +22,7 @@ let nameInput = document.getElementById("initials");
 
 let finalScore = document.getElementById("final-score");
 finalScore.textContent = timeText.textContent;
+
 
 let message = document.createElement("h4");
 endscreenDiv.appendChild(message);
@@ -144,10 +144,18 @@ function nextQ(event) {
 
 
 function endGame(event) {
-    // event.preventDefault();
+    event.preventDefault();
     finalScore.textContent = timeText.textContent;
-    score = (finalScore.textContent);
-    localStorage.setItem("score", score);
+    let scoreNum = parseInt(finalScore.textContent);
+    console.log(scoreNum);
+
+
+    let score = [];
+    score.push(finalScore.textContent);
+    localStorage.setItem("score", JSON.stringify(score))
+
+
+    //swap screen
     endscreenDiv.classList.replace("hide", "show");
     questionsDiv.classList.replace("show", "hide");
     feedbackDiv.style.display = "none";
@@ -158,12 +166,15 @@ function endGame(event) {
 //submitsScores
 submitBtn.addEventListener("click", function(event){
     event.preventDefault();
-    
-    let initials = String(nameInput.value);
+
+
+    let initials = [];
+    initials.push(nameInput.value);
     console.log(initials);
+    localStorage.setItem("initials", JSON.stringify(initials))
 
 
-    localStorage.setItem("initials", initials)
+    //clear field
     nameInput.value = "";
     message.textContent = "Score saved!"
     submitBtn.disabled = true;
