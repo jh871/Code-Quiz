@@ -1,68 +1,57 @@
 const qsArr =  [
     {
         questionNumber: 1,
-        question: "Question one?",
-        correctAnswer: "Q1 option four",
+        question: "How should a for loop be written?",
+        correctAnswer: "for(let i = 0; i < 5; i++)",
         options: [
-            "Q1 option one",
-            "Q1 option two",
-            "Q1 option three", 
-            "Q1 option four", 
+            "for(let i < 0, i = 5, i//)",
+            "for let i = 0, i < 5, i++",
+            "for(let i = 0, i < 5, i++)", 
+            "for(let i = 0; i < 5; i++)", 
         ]
     },
     {
         questionNumber: 2,
-        question: "Question two?",
-        correctAnswer: "Q2 option two",
+        question: "which of these is not an array method?",
+        correctAnswer: "mix()",
         options: [
-            "Q2 option one",
-            "Q2 option two",
-            "Q2 option three", 
-            "Q2 option four", 
+            "slice()",
+            "mix()",
+            "push()", 
+            "pop()", 
         ]
     },
     {
         questionNumber: 3,
-        question: "Question three?",
-        correctAnswer: "This is the correct answer",
+        question: "which of these is a JavaScript special word?",
+        correctAnswer: "this",
         options: [
-            "Q3 option one",
-            "Q3 option two",
-            "Q3 option three", 
-            "Q3 option four", 
+            "that",
+            "this",
+            "them", 
+            "those", 
         ]
     },
     {
         questionNumber: 4,
-        question: "Question four?",
-        correctAnswer: "This is the correct answer",
+        question: "Properties in an object are stored in:",
+        correctAnswer: "key-value pairs",
         options: [
-            "Q4 option one",
-            "Q4 option two",
-            "Q4 option three", 
-            "Q4 option four", 
+            "attribute-key pairs",
+            "key-value pairs",
+            "property-value pairs", 
+            "item-attribute pairs", 
         ]
     },
     {
         questionNumber: 5,
-        question: "Question five?",
-        correctAnswer: "This is the correct answer",
+        question: "Which of the following will return 10.52932 as 10.53?",
+        correctAnswer: "10.52932.toFixed(2)",
         options: [
-            "Q5 option one",
-            "Q5 option two",
-            "Q5 option three", 
-            "Q5 option four", 
+            "10.52932.toPrecision(3)",
+            "valueOf(10.52932)",
+            "10.52932.toFixed(2)", 
+            "10.52932.toString(4)", 
         ]
     }
 ];
-
-
-
-/*
-// Spare code:
-// selects random question
-function randomQ() {
-    let random = Math.floor(Math.random() * questionsArr.length);
-    console.log(questionsArr[random].questionNumber)
-    console.log(questionsArr[random].question);
-}*/
