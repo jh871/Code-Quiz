@@ -1,114 +1,152 @@
-//test logic to loop through and display text for questions
-questionsArr.forEach(function(question, index, arr){
-    // console.log(arr[index].questionNumber + ") " + arr[index].question);
-    // console.log(arr[index].correctAnswer);
-    // console.log(arr[index].option1);
-    // console.log(arr[index].option2);
-    // console.log(arr[index].option3);
-    // console.log(arr[index].option4);
-})
+const startscreenDiv = document.querySelector("#start-screen");
+let startBtn = document.querySelector("#start");
 
-
-//selects random question
-function randomQ() {
-let random = Math.floor(Math.random() * questionsArr.length);
-console.log(questionsArr[random].questionNumber)
-console.log(questionsArr[random].question);
-}
-
-// grabbing elements that will need manipulating
-//startscreen
-let startscreenDiv = document.querySelector("#start-screen");
-//div containing question and choices
-let questionsDiv = document.querySelector("#questions");
-//div containing question
+const questionsDiv = document.querySelector("#questions");
 let questionTitle = document.querySelector("#question-title");
-//div containing answer choices
 let choicesDiv = document.querySelector("#choices");
-// div to contain "right" or "wrong after each question"
-let feedbackDiv = document.querySelector("#feedback");
-//screen to show at the end of the quiz
-let endscreenDiv = document.querySelector("#end-screen");
+
+const feedbackDiv = document.querySelector("#feedback");
+const endscreenDiv = document.querySelector("#end-screen");
 
 
 
+ //no because this only creates one button
 
-//init 
-// let questionCount = 0;
+// let optBtnClicked = null;
+// let nxtBtnClicked = null;
 
-// //function for if selected answer is wrong
-// function wrongAnswer(){
-// feedbackDiv.textContent = "Wrong!"
-// secondsLeft = secondsLeft - 10;
-// questionCount++;
-// //generate next question
+
+// function disableButtons() {
+//     if (optBtnClicked === false){
+//         nextBtn.disabled = true;
+//         optionsBtn.disabled = false;
+//     } else if (optBtnClicked === true){
+//         optionsBtn.disabled = true;
+//         nextBtn.disabled = false;
+//     }; 
 // };
 
-// //loop for end of game
-// if (questionCount = 5){
+
+
+let qCount = 0; //will get up to 4 (5 counts)
+let qChoices = qsArr[qCount].options; //new array of 4 items
+choicesDiv.innerHTML=""; //sets blank page - will use later
+
+
+
+startBtn.addEventListener("click", function(event){
+    event.preventDefault(); //what does this do here?
+    startscreenDiv.classList.replace("start", "hide");
+    questionsDiv.classList.replace("hide", "show");
+    feedbackDiv.classList.replace("hide", "show");
+    askQuestion();
+    makeButtons();
+});
+
+function askQuestion() {
+    questionTitle.textContent = qsArr[qCount].question;
+}
+
+function makeButtons() {
+    choicesDiv.innerHTML = "";
+//generates 4 buttons
+    for (let i=0; i < qChoices.length; i++) {
+        let optionsBtn = document.createElement("button");
+        optionsBtn.id = ("button"+(i+1));
+        optionsBtn.className = ("optionsBtn");
+        optionsBtn.textContent = qChoices[i]; 
+        choicesDiv.appendChild(optionsBtn);
+        optionsBtn.addEventListener("click", answerGiven);
+        };
+
+}
+
+
+//function for receiving answer
+function answerGiven(event) {
+    let answerChoice = event.target;
+    answerChoice.classList.add("answer");
+    // console.log(qCount);
+    // console.log(qsArr[qCount].correctAnswer);
+    if (event.target.textContent === qsArr[qCount].correctAnswer){
+        feedbackDiv.textContent = "Correct!";
+    } else if (event.target.textContent !== qsArr[qCount].correctAnswer) {
+        feedbackDiv.textContent = "Wrong!"
+        // secondsLeft = secondsLeft - 10;
+    };
+    showNextButton();
+    
+}
+    // function for showing Next button (called when receiving answer)
+function showNextButton() {
+    let nextBtn = document.createElement("button");
+    nextBtn.className = ("nextBtn");
+    feedbackDiv.appendChild(nextBtn);
+        if ((qCount+1) < qsArr.length){
+            nextBtn.innerText = "Next";
+            nextBtn.addEventListener("click", nextQ);
+        } else if ((qCount+1) === qsArr.length) {
+            nextBtn.innerText = "Done";
+            console.log("last q:" + (qCount+1));
+            nextBtn.addEventListener("click", endGame);
+        }
+}
+
+function nextQ(event) {
+    let nextBtn = event.target;
+    console.log(event.target);
+    nextBtn.classList.add("hide");
+    
+    if (qCount < qsArr.length){
+    qCount++;
+    }
+    // console.log(qCount);
+    qChoices = qsArr[qCount].options;  //doesnt like this for when it goe past 5
+    askQuestion();
+    makeButtons();
+}
+
+
+
+
+// let buttons = document.querySelectorAll(".optionsBtn");
+//     console.log(buttons[0]);
+    
+//     // answer.removeEventListener("click", answerGiven);
+//     console.log(answers);
+
+
+
+
+
+
+
+
+
+
+
+
+ //as soon as opt buttons made
+ //when next button made
+//when answer clicked
+ //when next clicked
+// optionsBtn.disabled = true;
+// optionsBtn.disabled = false;
+// nextBtn.disabled = true;
+// nextBtn.disabled = false;
+
+
+
+
+
+function endGame() {
+    alert("Game over!")
+};
+// //loop for endGame - build function which is called
 //     questionsDiv.className.replace("show", "hide");
 //     endscreenDiv.className.replace("hide","show");
-
 //     let score = secondsRemaining;
 // };
 
-// start quiz
-// function startQuiz() {
-//     startscreenDiv.className.replace("show", "hide");
-//     questionsDiv.className.replace("hide", "show");
-//     }
-
-
-//questions array = [random(), random(), random(), random()]
-// question number = questions.index[i + 1]
-
-
-// pulling question title from questionsArr
-for (let i = 0; i < questionsArr.length; i++){
-    questionTitle.textContent = (questionsArr[i].question);
-};
-// x = 5, i = 4
-//generating 4 options
-// const numberofOptions = [1, 2, 3, 4]
-questionsArr.forEach(function(arr) {
-    
-for (let i = 0; i< arr.options.length; i++) {
-    let buttonEl = document.createElement("button");
-    buttonEl.id = ("button"+[i]);
-    buttonEl.className = ("button");
-
-// adding labels to buttons from options
-
-    buttonEl.textContent = arr.options[i];
-
-
-    choicesDiv.appendChild(buttonEl);
-
-    buttonEl.addEventListener("click", function(event) {
-    if (event.target.textContent === arr.correctAnswer){
-        feedbackDiv.textContent = "Correct!";
-    } else {
-        feedbackDiv.textContent = "Wrong!"
-    
-    
-    }});
-}});
-
-
-// //function for if answer is correct
-// function correctAnswer() {
-//     feedbackDiv.textContent = "Correct!"
-//     questionCount++;
-//     //generate next question
-// };
-
-
-//start button
-let startBtn = document.querySelector("#start");
-
-startBtn.addEventListener("click", function(event){
-    event.preventDefault();
-    startscreenDiv.classList.replace("show", "hide");
-    questionsDiv.classList.replace("hide", "show");
-});
+//make endGame an alert for now
 
