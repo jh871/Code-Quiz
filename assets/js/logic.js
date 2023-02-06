@@ -146,6 +146,8 @@ function nextQ(event) {
 function endGame(event) {
     // event.preventDefault();
     finalScore.textContent = timeText.textContent;
+    score = (finalScore.textContent);
+    localStorage.setItem("score", score);
     endscreenDiv.classList.replace("hide", "show");
     questionsDiv.classList.replace("show", "hide");
     feedbackDiv.style.display = "none";
@@ -157,9 +159,13 @@ function endGame(event) {
 submitBtn.addEventListener("click", function(event){
     event.preventDefault();
     
-    let initials = nameInput.value;
+    let initials = String(nameInput.value);
     console.log(initials);
+
+
+    localStorage.setItem("initials", initials)
     nameInput.value = "";
     message.textContent = "Score saved!"
+    submitBtn.disabled = true;
 });
 
