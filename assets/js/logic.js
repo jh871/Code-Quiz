@@ -25,18 +25,17 @@ const endscreenDiv = document.querySelector("#end-screen");
 const submitBtn = document.querySelector("#submit");
 let nameInput = document.getElementById("initials");
 
-let scoreText = document.getElementById("final-score");
-scoreText.textContent = secondsLeft;
+let finalScore = document.getElementById("final-score");
+finalScore.textContent = timeText.textContent;
 
 let message = document.createElement("h4");
 endscreenDiv.appendChild(message);
 
 
 
-
-
-
-
+let finishBtn = document.createElement("button");
+    finishBtn.className = ("finish");
+    finishBtn.innerText = "Finish"
 
 
 let qCount = 0; //will get up to 4 (5 counts)
@@ -44,25 +43,27 @@ let qChoices = qsArr[qCount].options; //new array of 4 items
 choicesDiv.innerHTML=""; //sets blank page - will use later
 
 
-
 function startTimer() {
-const clockRunning = setInterval(function() {
-    if (secondsLeft > 1){
-        secondsLeft--;
-        timeText.textContent = secondsLeft;
-    } else if (secondsLeft === 1){
-            timeText.textContent = secondsLeft;
+    const timer = setInterval(function() {
+        if (secondsLeft > 1){
             secondsLeft--;
-    } else {
-        timeText.textContent = secondsLeft;
-        if (secondsLeft < 0) {
-            secondsLeft = 0;
-            timeText.textContent = 0;
-        };
-        clearInterval(clockRunning);
-        // endGame();
-    }
-}, 1000);
+            timeText.textContent = secondsLeft;
+        } else if (secondsLeft === 1){
+            secondsLeft--;
+            timeText.textContent = secondsLeft;
+        } else {
+            if (secondsLeft < 0) {
+                secondsLeft = 0;
+            };
+            timeText.textContent = secondsLeft;
+            clearInterval(timer);
+            endGame();
+        }
+        if ((qCount+1) === qsArr.length) { //stops timer once 5th Q is displayed
+        clearInterval(timer);
+        score = secondsLeft;
+        }
+    }, 1000);
 };
 
 
@@ -127,13 +128,12 @@ function showNextButton() {
             nextBtn.addEventListener("click", nextQ);
 
         } else if ((qCount+1) === qsArr.length) {
-            nextBtn.innerText = "Done";
-            nextBtn.style.backgroundColor = "red";
+            nextBtn.style.display = "none";
+            feedbackDiv.appendChild(finishBtn);
+            finishBtn.addEventListener("click", endGame);
         }
-    if (nextBtn.innerText === "Done"){
-        nextBtn.addEventListener("click", endGame);
-    };
 }
+
 function nextQ(event) {
     let nextBtn = event.target;
     console.log(event.target);
@@ -148,26 +148,27 @@ function nextQ(event) {
     makeButtons();
 }
 
-if (secondsLeft < 0) {
-    secondsLeft = 0;
-    timeText.textContent = 0;
-}
+
+// finishBtn.addEventListener("click", endGame);
+
+
 
 function endGame(event) {
-    
-    // questionsDiv.classList.replace("show", "hide");
-    // feedbackDiv.classList.replace("show", "hide");
-    score = secondsLeft;
-    timeText.textContent = secondsLeft;
+    // event.preventDefault();
+    finalScore.textContent = timeText.textContent;
+    endscreenDiv.classList.replace("hide", "show");
+    questionsDiv.classList.replace("show", "hide");
+    feedbackDiv.style.display = "none";
+    nameInput.value = "";
 };
 
-// //submitsScores
-// submitBtn.addEventListener("click", function(event){
-//     event.preventDefault();
+//submitsScores
+submitBtn.addEventListener("click", function(event){
+    event.preventDefault();
     
-//     let initials = nameInput.value;
-//     console.log(initials);
-//     nameInput.value = "";
-//     message.textContent = "Score saved!"
-// });
+    let initials = nameInput.value;
+    console.log(initials);
+    nameInput.value = "";
+    message.textContent = "Score saved!"
+});
 
