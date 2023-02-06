@@ -7,20 +7,16 @@ let choicesDiv = document.querySelector("#choices");
 const feedbackDiv = document.querySelector("#feedback");
 /******************* 
 Timer
-********************/
+*******************/
 let secondsLeft = 60;
 let score = 0;
 let timerDiv = document.querySelector(".timer");
 let timeText = document.querySelector("#time");
 
-
-
-
-
-
+let answerNumber = 0
 /************* 
 End page
-*/
+*************/
 const endscreenDiv = document.querySelector("#end-screen");
 const submitBtn = document.querySelector("#submit");
 let nameInput = document.getElementById("initials");
@@ -59,9 +55,10 @@ function startTimer() {
             clearInterval(timer);
             endGame();
         }
-        if ((qCount+1) === qsArr.length) { //stops timer once 5th Q is displayed
+        if (answerGiven === qsArr.length) {
         clearInterval(timer);
         score = secondsLeft;
+        timeText.textContent = score;
         }
     }, 1000);
 };
@@ -80,15 +77,9 @@ startBtn.addEventListener("click", function(event){
     
 });
 
-
-
 function askQuestion() {
     questionTitle.textContent = qsArr[qCount].question;
 }
-
-
-
-
 
 
 function makeButtons() {
@@ -103,8 +94,12 @@ function makeButtons() {
         };
 
 }
+
+
+
 //function for receiving answer
 function answerGiven(event) {
+    answerNumber ++;
     let answerChoice = event.target;
     answerChoice.classList.add("answerChoice");
     if (event.target.textContent === qsArr[qCount].correctAnswer){
@@ -138,19 +133,14 @@ function nextQ(event) {
     let nextBtn = event.target;
     console.log(event.target);
     nextBtn.classList.add("hide");
-    feedbackDiv.textContent = "";
-
+    feedbackDiv.textContent = ""; //clears feedback and next
     if (qCount < qsArr.length){
     qCount++;
     }
     qChoices = qsArr[qCount].options;
-    askQuestion(); //counts down twice as fast - triggets clock again
+    askQuestion();
     makeButtons();
 }
-
-
-// finishBtn.addEventListener("click", endGame);
-
 
 
 function endGame(event) {
@@ -160,6 +150,7 @@ function endGame(event) {
     questionsDiv.classList.replace("show", "hide");
     feedbackDiv.style.display = "none";
     nameInput.value = "";
+    timerDiv.style.display = "none";
 };
 
 //submitsScores
