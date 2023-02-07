@@ -1,10 +1,10 @@
 const startscreenDiv = document.querySelector("#start-screen");
-let startBtn = document.querySelector("#start");
-
+const feedbackDiv = document.querySelector("#feedback");
 const questionsDiv = document.querySelector("#questions");
+let startBtn = document.querySelector("#start");
 let questionTitle = document.querySelector("#question-title");
 let choicesDiv = document.querySelector("#choices");
-const feedbackDiv = document.querySelector("#feedback");
+
 /******************* 
 Timer
 *******************/
@@ -12,6 +12,7 @@ let secondsLeft = 60;
 let timerDiv = document.querySelector(".timer");
 let timeText = document.querySelector("#time");
 
+//count to end quiz after 5 Qs
 let answerNumber = 0
 /************* 
 End page
@@ -20,15 +21,16 @@ const endscreenDiv = document.querySelector("#end-screen");
 const submitBtn = document.querySelector("#submit");
 let nameInput = document.getElementById("initials");
 
+//capturing time as final score
 let finalScore = document.getElementById("final-score");
 finalScore.textContent = timeText.textContent;
 
-
+//confirmation message for saving score
 let message = document.createElement("h4");
 endscreenDiv.appendChild(message);
 
 
-
+//button to finish quiz and show end screen
 let finishBtn = document.createElement("button");
     finishBtn.className = ("finish");
     finishBtn.innerText = "Finish"
@@ -37,6 +39,7 @@ let finishBtn = document.createElement("button");
 let qCount = 0; //will get up to 4 (5 counts)
 let qChoices = qsArr[qCount].options; //new array of 4 items
 choicesDiv.innerHTML=""; //sets blank page - will use later
+
 
 
 function startTimer() {
@@ -65,7 +68,7 @@ function startTimer() {
 
 
 
-
+//on start, screen changes to quiz
 startBtn.addEventListener("click", function(event){
     event.preventDefault(); //what does this do here?
     startTimer();
@@ -77,11 +80,12 @@ startBtn.addEventListener("click", function(event){
     
 });
 
+//generates Qs
 function askQuestion() {
     questionTitle.textContent = qsArr[qCount].question;
 }
 
-
+//generates choices
 function makeButtons() {
     choicesDiv.innerHTML = "";
     for (let i=0; i < qChoices.length; i++) {
@@ -97,7 +101,7 @@ function makeButtons() {
 
 
 
-//function for receiving answer
+//function for receiving answer and checking if correct
 function answerGiven(event) {
     answerNumber ++;
     let answerChoice = event.target;
@@ -129,9 +133,9 @@ function showNextButton() {
         }
 }
 
+//will count questions when generating next Q
 function nextQ(event) {
     let nextBtn = event.target;
-    console.log(event.target);
     nextBtn.classList.add("hide");
     feedbackDiv.textContent = ""; //clears feedback and next
     if (qCount < qsArr.length){
@@ -142,20 +146,16 @@ function nextQ(event) {
     makeButtons();
 }
 
-
+//saves score
 function endGame(event) {
     event.preventDefault();
     finalScore.textContent = timeText.textContent;
     let scoreNum = parseInt(finalScore.textContent);
-    console.log(scoreNum);
-
-
+//captures score and sends it to localStorage
     let score = [];
     score.push(finalScore.textContent);
     localStorage.setItem("score", JSON.stringify(score))
-
-
-    //swap screen
+//swap screen to end screen
     endscreenDiv.classList.replace("hide", "show");
     questionsDiv.classList.replace("show", "hide");
     feedbackDiv.style.display = "none";
@@ -163,20 +163,14 @@ function endGame(event) {
     timerDiv.style.display = "none";
 };
 
-//submitsScores
+//captures initials and sends it to local storage
 submitBtn.addEventListener("click", function(event){
     event.preventDefault();
-
-
     let initials = [];
     initials.push(nameInput.value);
-    console.log(initials);
     localStorage.setItem("initials", JSON.stringify(initials))
-
-
     //clear field
     nameInput.value = "";
     message.textContent = "Score saved!"
     submitBtn.disabled = true;
 });
-
