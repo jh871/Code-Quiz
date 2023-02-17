@@ -146,15 +146,36 @@ function nextQ(event) {
     makeButtons();
 }
 
+
+
+let scoresArr = [];
 //saves score
 function endGame(event) {
     event.preventDefault();
     finalScore.textContent = timeText.textContent;
     let scoreNum = parseInt(finalScore.textContent);
+
+
 //captures score and sends it to localStorage
-    let score = [];
-    score.push(finalScore.textContent);
-    localStorage.setItem("score", JSON.stringify(score))
+
+//Test if ls has scores
+    let storageTest = localStorage.getItem("score");
+//and if it does:
+    if (storageTest !== null){
+//parse that to this array:
+scoresArr = JSON.parse(localStorage.getItem("score"));
+};
+//Then add the new bit:
+scoresArr.push(scoreNum); //if no work, try finalScore.textContent.
+//Then send it back to local storage:
+localStorage.setItem("score", JSON.stringify(scoresArr));
+;
+
+
+// JSON.parse(score);
+// score.push(scoreNum);
+
+
 //swap screen to end screen
     endscreenDiv.classList.replace("hide", "show");
     questionsDiv.classList.replace("show", "hide");
@@ -163,12 +184,28 @@ function endGame(event) {
     timerDiv.style.display = "none";
 };
 
+
+let initialsArr = [];
+
 //captures initials and sends it to local storage
 submitBtn.addEventListener("click", function(event){
     event.preventDefault();
-    let initials = [];
-    initials.push(nameInput.value);
-    localStorage.setItem("initials", JSON.stringify(initials))
+//testing:
+    let initialsTest = localStorage.getItem("initials");
+    if (initialsTest !== null){
+    //getting:
+    initialsArr = JSON.parse(localStorage.getItem("initials"));
+}
+    //adding:
+    initialsArr.push(nameInput.value);
+    //setting:
+    localStorage.setItem("initials", JSON.stringify(initialsArr))
+
+    
+    // JSON.parse(initials);
+    // initials.push(nameInput.value);
+
+
     //clear field
     nameInput.value = "";
     message.textContent = "Score saved!"
